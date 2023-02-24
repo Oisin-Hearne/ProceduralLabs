@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 
-//Lab 1 - File Reading
 void main() {
 	FILE* fp;
 
@@ -9,6 +8,7 @@ void main() {
 	int sales, totalSales=0, numHardware=0, totalHardwareSales=0, numGrocery=0, totalGrocerySales=0, numDrapery=0, totalDraperySales=0;
 	int maxHardware=0, maxGrocery=0, maxDrapery=0;
 	float averageHardware, averageGrocery, averageDrapery;
+	int numinputs;
 
 
 	fp = fopen("DailySales.txt", "r");
@@ -21,36 +21,39 @@ void main() {
 	{
 		while (feof(fp) == 0) //While there is still content left in the file
 		{
-			fscanf(fp, "%s %d", deptname, &sales); //Input from file
-			printf("\n[Read: %s %d]", deptname, sales);
-
-			totalSales += sales;
-
-			//Depending on whether or not the line is Hardware, Grocery or Drapery
-			//increment the num variable, check for new maximum and add to total sales.
-			if (strcmp(deptname, "Hardware") == 0)
+			numinputs = fscanf(fp, "%s %d", deptname, &sales); //Input from file
+			if (numinputs > 0) //Numinputs is used to check to make sure a line isn't empty.
 			{
-				totalHardwareSales += sales;
-				numHardware++;
+				printf("\n[Read: %s %d]", deptname, sales);
 
-				if (maxHardware < sales)
-					maxHardware = sales;
-			}
-			else if (strcmp(deptname, "Grocery") == 0)
-			{
-				totalGrocerySales += sales;
-				numGrocery++;
+				totalSales += sales;
 
-				if (maxGrocery < sales)
-					maxGrocery = sales;
-			}
-			else if (strcmp(deptname, "Drapery") == 0)
-			{
-				totalDraperySales += sales;
-				numDrapery++;
+				//Depending on whether or not the line is Hardware, Grocery or Drapery
+				//increment the num variable, check for new maximum and add to total sales.
+				if (strcmp(deptname, "Hardware") == 0)
+				{
+					totalHardwareSales += sales;
+					numHardware++;
 
-				if (maxDrapery < sales)
-					maxDrapery = sales;
+					if (maxHardware < sales)
+						maxHardware = sales;
+				}
+				else if (strcmp(deptname, "Grocery") == 0)
+				{
+					totalGrocerySales += sales;
+					numGrocery++;
+
+					if (maxGrocery < sales)
+						maxGrocery = sales;
+				}
+				else if (strcmp(deptname, "Drapery") == 0)
+				{
+					totalDraperySales += sales;
+					numDrapery++;
+
+					if (maxDrapery < sales)
+						maxDrapery = sales;
+				}
 			}
 		}
 
